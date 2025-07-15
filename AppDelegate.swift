@@ -60,7 +60,7 @@ extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         if let token = fcmToken {
             if let flutterEngine = (window?.rootViewController as? FlutterViewController)?.engine {
-                let channel = FlutterMethodChannel(name: "com.balochtransport/notifications", binaryMessenger: flutterEngine.binaryMessenger)
+                let channel = FlutterMethodChannel(name: "com.test_fcm/notifications", binaryMessenger: flutterEngine.binaryMessenger)
                 channel.invokeMethod("onFCMToken", arguments: token) { result in
                     if let error = result as? FlutterError {
                         print("Failed to send FCM token to Flutter: \(error.message ?? "Unknown error")")
@@ -77,7 +77,7 @@ extension AppDelegate: MessagingDelegate {
         // Check for pending FCM token and send it if Flutter is ready
         if let pendingToken = UserDefaults.standard.string(forKey: "pendingFCMToken"),
            let flutterEngine = (window?.rootViewController as? FlutterViewController)?.engine {
-            let channel = FlutterMethodChannel(name: "com.balochtransport/notifications", binaryMessenger: flutterEngine.binaryMessenger)
+            let channel = FlutterMethodChannel(name: "com.test_fcm/notifications", binaryMessenger: flutterEngine.binaryMessenger)
             channel.invokeMethod("onFCMToken", arguments: pendingToken) { result in
                 if result == nil || result is FlutterError {
                     print("Failed to send pending FCM token to Flutter")
